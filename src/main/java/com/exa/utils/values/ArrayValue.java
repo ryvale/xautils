@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.exa.utils.ManagedException;
 
-public class ArrayValue extends Value<List<Value<?>>> {
+public class ArrayValue extends MemoryValue<List<Value<?>>> {
 
 	/**
 	 * 

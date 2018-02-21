@@ -1,6 +1,6 @@
 package com.exa.utils.values;
 
-public class StringValue extends Value<String> {
+public class StringValue extends MemoryValue<String> {
 	/**
 	 * 
 	 */

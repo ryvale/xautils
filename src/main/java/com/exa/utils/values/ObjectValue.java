@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.exa.utils.ManagedException;
 
-public class ObjectValue extends Value<Map<String, Value<?>>> {
+public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 	/**
 	 * 
 	 */
@@ -27,7 +27,7 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		return value.containsKey(name);
 	}
 	
-	public String getAttributAsStringEx(String name) throws ManagedException {
+	public String getAttributAsString(String name) throws ManagedException {
 		Value<?> v = value.get(name);
 		if(v == null) return null;
 		
@@ -37,15 +37,15 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		return ov.toString();
 	}
 	
-	public String getAttributAsStringEx(String name, String defaultValue) throws ManagedException {
-		String res  = getAttributAsStringEx(name);
+	public String getAttributAsString(String name, String defaultValue) throws ManagedException {
+		String res  = getAttributAsString(name);
 		
 		if(res == null) return defaultValue;
 		
 		return res;
 	}
 	
-	public String getAttributAsString(String name) {
+	/*public String getAttributAsString(String name) {
 		Value<?> v = value.get(name);
 		if(v == null) return null;
 		
@@ -53,7 +53,7 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		if(ov == null) return null;
 		
 		return ov.toString();
-	}
+	}*/
 	
 	public String getRequiredAttributAsString(String name) throws ManagedException {
 		Value<?> v = value.get(name);
@@ -66,13 +66,13 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 	}
 	
 	public ObjectValue getRequiredAttributAsObjectValue(String name) throws ManagedException {
-		ObjectValue ov = getAttributAsObjectValueEx(name);
+		ObjectValue ov = getAttributAsObjectValue(name);
 		if(ov == null) throw new ManagedException(String.format("The property %s is required.", name));
 		
 		return ov;
 	}
 	
-	public ObjectValue getAttributAsObjectValueEx(String name) throws ManagedException {
+	public ObjectValue getAttributAsObjectValue(String name) throws ManagedException {
 		Value<?> v = value.get(name);
 		if(v == null) return null;
 		
@@ -82,7 +82,7 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		return ov;
 	}
 	
-	public ObjectValue getAttributAsObjectValue(String name) {
+	/*public ObjectValue getAttributAsObjectValue(String name) {
 		Value<?> v = value.get(name);
 		if(v == null) return null;
 		
@@ -90,16 +90,16 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		if(ov == null) return null;
 		
 		return ov;
-	}
+	}*/
 	
 	public Integer getRequiredAttributAsInteger(String name) throws ManagedException {
-		Integer res = getAttributAsIntegerEx(name);
+		Integer res = getAttributAsInteger(name);
 		if(res == null) throw new ManagedException(String.format("The property %s is required.", name));
 		
 		return res;
 	}
 	
-	public Integer getAttributAsIntegerEx(String name) throws ManagedException {
+	public Integer getAttributAsInteger(String name) throws ManagedException {
 		Value<?> v = value.get(name);
 		if(v == null) return null;
 		
@@ -109,7 +109,7 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		return ov.getValue();
 	}
 	
-	public Integer getAttributAsInteger(String name) {
+	/*public Integer getAttributAsInteger(String name) {
 		Value<?> v = value.get(name);
 		if(v == null) return null;
 		
@@ -117,20 +117,20 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		if(ov == null) return null;
 		
 		return ov.getValue();
-	}
+	}*/
 	
 	public Value<?> getAttribut(String name) {
 		return value.get(name);
 	}
 	
 	public List<Value<?>> getRequiredAttributAsArray(String name) throws ManagedException {
-		List<Value<?>> res = getAttributAsArrayEx(name);
+		List<Value<?>> res = getAttributAsArray(name);
 		if(res == null) throw new ManagedException(String.format("The property %s is required.", name));
 		
 		return res;
 	}
 	
-	public List<Value<?>> getAttributAsArrayEx(String name) throws ManagedException {
+	public List<Value<?>> getAttributAsArray(String name) throws ManagedException {
 		Value<?> v = value.get(name);
 		if(v == null) return null;
 		
@@ -141,7 +141,7 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 	}
 	
 	
-	public ArrayValue getAttributAsArrayValueEx(String name) throws ManagedException {
+	/*public ArrayValue getAttributAsArrayValue(String name) throws ManagedException {
 		Value<?> v = value.get(name);
 		if(v == null) return null;
 		
@@ -149,11 +149,11 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		if(av == null) throw new ManagedException(String.format("The property %s is not an array value", name));
 		
 		return av;
-	}
+	}*/
 	
-	public String getPathAttributAsStringEx(String pathAttribut) throws ManagedException {
+	public String getPathAttributAsString(String pathAttribut) throws ManagedException {
 		
-		String parts[] = pathAttribut.split(".");
+		String parts[] = pathAttribut.split("[.]");
 		
 		Value<?> rpv = getAttribut(parts[0]);
 		if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
@@ -171,7 +171,27 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		return rps.getValue();
 	}
 	
-	public String getPathAttributAsString(String pathAttribut) {
+	public List<Value<?>> getPathAttributAsArray(String pathAttribut) throws ManagedException {
+		
+		String parts[] = pathAttribut.split("[.]");
+		
+		Value<?> rpv = getAttribut(parts[0]);
+		if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+		
+		for(int i=1;i<parts.length;i++) {
+			ObjectValue rpo = rpv.asObjectValue();
+			if(rpo == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+			
+			rpv = rpo.getAttribut(parts[i]);
+		}
+		
+		ArrayValue av = rpv.asArrayValue();
+		if(av == null) throw new ManagedException(String.format("The property %s is not a string.", parts[parts.length - 1]));
+		
+		return av.getValue();
+	}
+	
+	/*public String getPathAttributAsString(String pathAttribut) {
 		
 		try {
 			return getPathAttributAsStringEx(pathAttribut);
@@ -180,11 +200,11 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		}
 		
 		return null;
-	}
+	}*/
 	
-	public ObjectValue getPathAttributAsObjecValueEx(String pathAttribut) throws ManagedException {
+	public ObjectValue getPathAttributAsObjecValue(String pathAttribut) throws ManagedException {
 		
-		String parts[] = pathAttribut.split(".");
+		String parts[] = pathAttribut.split("[.]");
 		
 		Value<?> rpv = getAttribut(parts[0]);
 		if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
@@ -202,7 +222,7 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		return ov.getAttributAsObjectValue(parts[parts.length - 1]);
 	}
 	
-	public ObjectValue getPathAttributAsObjecValue(String pathAttribut) {
+	/*public ObjectValue getPathAttributAsObjecValue(String pathAttribut) {
 		
 		try {
 			return getPathAttributAsObjecValueEx(pathAttribut);
@@ -211,7 +231,7 @@ public class ObjectValue extends Value<Map<String, Value<?>>> {
 		}
 		
 		return null;
-	}
+	}*/
 	
 	public void setAttribut(String name, String avalue) {
 		value.put(name, new StringValue(avalue));

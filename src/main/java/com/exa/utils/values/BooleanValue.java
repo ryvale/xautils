@@ -1,24 +1,21 @@
 package com.exa.utils.values;
 
-public class IntegerValue extends MemoryValue<Integer> {
-
+public class BooleanValue extends MemoryValue<Boolean> {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	
-
-	public IntegerValue() {
+	public BooleanValue() {
 		super();
 	}
 
-	public IntegerValue(Integer value) {
+	public BooleanValue(Boolean value) {
 		super(value);
 	}
 
 	@Override
-	public IntegerValue asIntegerValue() {
+	public BooleanValue asBooleanValue() {
 		return this;
 	}
 	

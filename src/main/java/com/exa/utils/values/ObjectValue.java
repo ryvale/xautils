@@ -81,17 +81,7 @@ public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 		
 		return ov;
 	}
-	
-	/*public ObjectValue getAttributAsObjectValue(String name) {
-		Value<?> v = value.get(name);
-		if(v == null) return null;
 		
-		ObjectValue ov = v.asObjectValue();
-		if(ov == null) return null;
-		
-		return ov;
-	}*/
-	
 	public Integer getRequiredAttributAsInteger(String name) throws ManagedException {
 		Integer res = getAttributAsInteger(name);
 		if(res == null) throw new ManagedException(String.format("The property %s is required.", name));
@@ -130,6 +120,16 @@ public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 		return res;
 	}
 	
+	public ArrayValue getAttributAsArrayValue(String name) throws ManagedException {
+		Value<?> v = value.get(name);
+		if(v == null) return null;
+		
+		ArrayValue av = v.asArrayValue();
+		if(av == null) throw new ManagedException(String.format("The property %s is not an array value", name));
+		
+		return av;
+	}
+	
 	public List<Value<?>> getAttributAsArray(String name) throws ManagedException {
 		Value<?> v = value.get(name);
 		if(v == null) return null;
@@ -139,19 +139,30 @@ public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 		
 		return av.getValue();
 	}
-	
-	
-	/*public ArrayValue getAttributAsArrayValue(String name) throws ManagedException {
-		Value<?> v = value.get(name);
-		if(v == null) return null;
 		
-		ArrayValue av = v.asArrayValue();
-		if(av == null) throw new ManagedException(String.format("The property %s is not an array value", name));
-		
-		return av;
-	}*/
-	
 	public String getPathAttributAsString(String pathAttribut) throws ManagedException {
+		
+		String parts[] = pathAttribut.split("[.]");
+		
+		Value<?> rpv = getAttribut(parts[0]);
+		//if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+		
+		for(int i=1;i<parts.length;i++) {
+			ObjectValue rpo = rpv.asObjectValue();
+			if(rpo == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+			
+			rpv = rpo.getAttribut(parts[i]);
+		}
+		
+		if(rpv == null) return null;
+		
+		StringValue rps = rpv.asStringValue();
+		if(rps == null) throw new ManagedException(String.format("The property %s is not a string.", parts[parts.length - 1]));
+		
+		return rps.getValue();
+	}
+	
+	public ArrayValue getPathAttributAsArrayValue(String pathAttribut) throws ManagedException {
 		
 		String parts[] = pathAttribut.split("[.]");
 		
@@ -165,10 +176,10 @@ public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 			rpv = rpo.getAttribut(parts[i]);
 		}
 		
-		StringValue rps = rpv.asStringValue();
-		if(rps == null) throw new ManagedException(String.format("The property %s is not a string.", parts[parts.length - 1]));
+		ArrayValue av = rpv.asArrayValue();
+		if(av == null) throw new ManagedException(String.format("The property %s is not a string.", parts[parts.length - 1]));
 		
-		return rps.getValue();
+		return av;
 	}
 	
 	public List<Value<?>> getPathAttributAsArray(String pathAttribut) throws ManagedException {
@@ -207,7 +218,7 @@ public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 		String parts[] = pathAttribut.split("[.]");
 		
 		Value<?> rpv = getAttribut(parts[0]);
-		if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+		//if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
 		
 		for(int i=1;i<parts.length;i++) {
 			ObjectValue rpo = rpv.asObjectValue();
@@ -216,10 +227,13 @@ public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 			rpv = rpo.getAttribut(parts[i]);
 		}
 		
+		
+		if(rpv == null) return null;
+		
 		ObjectValue ov = rpv.asObjectValue();
 		if(ov == null) throw new ManagedException(String.format("The property %s is not an object.", parts[parts.length - 1]));
 		
-		return ov.getAttributAsObjectValue(parts[parts.length - 1]);
+		return ov; //.getAttributAsObjectValue(parts[parts.length - 1]);
 	}
 	
 	/*public ObjectValue getPathAttributAsObjecValue(String pathAttribut) {

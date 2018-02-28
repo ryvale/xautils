@@ -1,6 +1,6 @@
 package com.exa.utils.values;
 
-public class StringValue extends MemoryValue<String> {
+public class StringValue<_C>  extends MemoryValue<String, _C> {
 	/**
 	 * 
 	 */
@@ -13,7 +13,7 @@ public class StringValue extends MemoryValue<String> {
 	}
 
 	@Override
-	public StringValue asStringValue() {
+	public StringValue<_C> asStringValue() {
 		return this;
 	}
 

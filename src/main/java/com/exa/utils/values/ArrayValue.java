@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.exa.utils.ManagedException;
 
-public class ArrayValue extends MemoryValue<List<Value<?>>> {
+public class ArrayValue<_C> extends MemoryValue<List<Value<?, _C>>, _C> {
 
 	/**
 	 * 
@@ -17,15 +17,15 @@ public class ArrayValue extends MemoryValue<List<Value<?>>> {
 	}
 
 	@Override
-	public ArrayValue asArrayValue() {
+	public ArrayValue<_C> asArrayValue() {
 		return this;
 	}
 	
 	public String getString(int i) throws ManagedException {
 		try {
-			Value<?> vl = value.get(i);
+			Value<?, _C> vl = value.get(i);
 			if(vl == null) return null;
-			StringValue svl =  vl.asStringValue();
+			StringValue<_C> svl =  vl.asStringValue();
 			if(svl == null) throw new ManagedException(String.format("This array item is not a string value"));
 			
 			return svl.getValue();
@@ -44,11 +44,11 @@ public class ArrayValue extends MemoryValue<List<Value<?>>> {
 		return res;
 	}
 	
-	public ObjectValue getObjectValue(int i) throws ManagedException {
+	public ObjectValue<_C> getObjectValue(int i) throws ManagedException {
 		try {
-			Value<?> vl = value.get(i);
+			Value<?, _C> vl = value.get(i);
 			if(vl == null) return null;
-			ObjectValue ovl =  vl.asObjectValue();
+			ObjectValue<_C> ovl =  vl.asObjectValue();
 			if(ovl == null) throw new ManagedException(String.format("This array item is not an object value"));
 			
 			return ovl;
@@ -59,30 +59,30 @@ public class ArrayValue extends MemoryValue<List<Value<?>>> {
 		
 	}
 	
-	public ObjectValue getObjectValue(int i, ObjectValue defautValue) throws ManagedException {
-		ObjectValue res = getObjectValue(i);
+	public ObjectValue<_C> getObjectValue(int i, ObjectValue<_C> defautValue) throws ManagedException {
+		ObjectValue<_C> res = getObjectValue(i);
 		
 		if(res == null) return defautValue;
 		
 		return res;
 	}
 	
-	public void add(Value<?> item) {
+	public void add(Value<?, _C> item) {
 		value.add(item);
 	}
 
 	public void add(String item) {
-		value.add(new StringValue(item));
+		value.add(new StringValue<_C>(item));
 	}
 	
-	public ObjectValue addObjectValue() {
-		ObjectValue res = new ObjectValue();
+	public ObjectValue<_C> addObjectValue() {
+		ObjectValue<_C> res = new ObjectValue<>();
 		value.add(res);
 		return res;
 	}
 	
-	public ArrayValue addArrayValue() {
-		ArrayValue res = new ArrayValue();
+	public ArrayValue<_C> addArrayValue() {
+		ArrayValue<_C> res = new ArrayValue<>();
 		value.add(res);
 		return res;
 	}

@@ -1,6 +1,6 @@
 package com.exa.utils.values;
 
-public class BooleanValue extends MemoryValue<Boolean> {
+public class BooleanValue<_C> extends MemoryValue<Boolean, _C> {
 	/**
 	 * 
 	 */
@@ -15,7 +15,7 @@ public class BooleanValue extends MemoryValue<Boolean> {
 	}
 
 	@Override
-	public BooleanValue asBooleanValue() {
+	public BooleanValue<_C> asBooleanValue() {
 		return this;
 	}
 	

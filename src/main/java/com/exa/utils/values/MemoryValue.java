@@ -2,7 +2,7 @@ package com.exa.utils.values;
 
 import com.exa.utils.ManagedException;
 
-public abstract class MemoryValue<T> implements Value<T> {
+public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 	/**
 	 * 
 	 */
@@ -35,38 +35,38 @@ public abstract class MemoryValue<T> implements Value<T> {
 	 * @see com.exa.utils.values.AbstractValue#asStringValue()
 	 */
 	@Override
-	public StringValue asStringValue() { return null; }
+	public StringValue<_C> asStringValue() { return null; }
 	
 	/* (non-Javadoc)
 	 * @see com.exa.utils.values.AbstractValue#asObjectValue()
 	 */
 	@Override
-	public ObjectValue asObjectValue() { return null; }
+	public ObjectValue<_C> asObjectValue() { return null; }
 	
 	/* (non-Javadoc)
 	 * @see com.exa.utils.values.AbstractValue#asArrayValue()
 	 */
 	@Override
-	public ArrayValue asArrayValue() { return null; }
+	public ArrayValue<_C> asArrayValue() { return null; }
 	
 	/* (non-Javadoc)
 	 * @see com.exa.utils.values.AbstractValue#asBooleanValue()
 	 */
 	@Override
-	public BooleanValue asBooleanValue() { return null; }
+	public BooleanValue<_C> asBooleanValue() { return null; }
 	
 	/* (non-Javadoc)
 	 * @see com.exa.utils.values.AbstractValue#asDecimalValue()
 	 */
 	@Override
-	public DecimalValue asDecimalValue() { return null; }
+	public DecimalValue<_C> asDecimalValue() { return null; }
 	
 	/* (non-Javadoc)
 	 * @see com.exa.utils.values.AbstractValue#asRequiredObjectValue()
 	 */
 	@Override
-	public ObjectValue asRequiredObjectValue() throws ManagedException { 
-		ObjectValue res = asObjectValue();
+	public ObjectValue<_C> asRequiredObjectValue() throws ManagedException { 
+		ObjectValue<_C> res = asObjectValue();
 		if(res == null)	throw new ManagedException("This value is not an object");
 		
 		
@@ -79,7 +79,7 @@ public abstract class MemoryValue<T> implements Value<T> {
 	 * @see com.exa.utils.values.AbstractValue#asIntegerValue()
 	 */
 	@Override
-	public IntegerValue asIntegerValue() { return null; }
+	public IntegerValue<_C> asIntegerValue() { return null; }
 	
 	
 	/* (non-Javadoc)
@@ -87,7 +87,7 @@ public abstract class MemoryValue<T> implements Value<T> {
 	 */
 	@Override
 	public String asString() throws ManagedException {
-		StringValue sv = asStringValue();
+		StringValue<_C> sv = asStringValue();
 		if(sv == null) throw new ManagedException(String.format("This value is not a string value."));
 		
 		return sv.getValue();
@@ -96,7 +96,7 @@ public abstract class MemoryValue<T> implements Value<T> {
 
 	@Override
 	public Integer asInteger() throws ManagedException {
-		IntegerValue v = asIntegerValue();
+		IntegerValue<_C> v = asIntegerValue();
 		if(v == null) throw new ManagedException(String.format("This value is not a integer value."));
 		
 		return v.getValue();
@@ -114,7 +114,7 @@ public abstract class MemoryValue<T> implements Value<T> {
 	}
 
 	@Override
-	public CalculableValue asCalculableValue() {
+	public CalculableValue<_C> asCalculableValue() {
 		return null;
 	}
 

@@ -4,29 +4,29 @@ import java.io.Serializable;
 
 import com.exa.utils.ManagedException;
 
-public interface Value<T> extends Serializable {
+public interface Value<T, _C> extends Serializable {
 
 	T getValue();
 
 	void setValue(T value);
 
-	StringValue asStringValue();
+	StringValue<_C> asStringValue();
 
-	ObjectValue asObjectValue();
+	ObjectValue<_C> asObjectValue();
 
-	ArrayValue asArrayValue();
+	ArrayValue<_C> asArrayValue();
 
-	BooleanValue asBooleanValue();
+	BooleanValue<_C> asBooleanValue();
 
-	DecimalValue asDecimalValue();
+	DecimalValue<_C> asDecimalValue();
 	
-	IntegerValue asIntegerValue();
+	IntegerValue<_C> asIntegerValue();
 	
-	CalculableValue asCalculableValue();
+	CalculableValue<_C> asCalculableValue();
 	
 	Integer asInteger() throws ManagedException;
 
-	ObjectValue asRequiredObjectValue() throws ManagedException;
+	ObjectValue<_C> asRequiredObjectValue() throws ManagedException;
 	
 	String asRequiredString() throws ManagedException;
 	

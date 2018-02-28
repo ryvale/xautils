@@ -1,6 +1,6 @@
 package com.exa.utils.values;
 
-public class DecimalValue extends MemoryValue<Double> {
+public class DecimalValue<_C> extends MemoryValue<Double, _C> {
 	/**
 	 * 
 	 */
@@ -15,7 +15,7 @@ public class DecimalValue extends MemoryValue<Double> {
 	}
 	
 	@Override
-	public DecimalValue asDecimalValue() {
+	public DecimalValue<_C> asDecimalValue() {
 		return this;
 	}
 }

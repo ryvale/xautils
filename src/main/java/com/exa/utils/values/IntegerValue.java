@@ -1,6 +1,6 @@
 package com.exa.utils.values;
 
-public class IntegerValue extends MemoryValue<Integer> {
+public class IntegerValue<_C> extends MemoryValue<Integer, _C> {
 
 	/**
 	 * 
@@ -18,7 +18,7 @@ public class IntegerValue extends MemoryValue<Integer> {
 	}
 
 	@Override
-	public IntegerValue asIntegerValue() {
+	public IntegerValue<_C> asIntegerValue() {
 		return this;
 	}
 	

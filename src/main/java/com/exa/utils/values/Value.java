@@ -3,7 +3,6 @@ package com.exa.utils.values;
 import java.io.Serializable;
 
 import com.exa.utils.ManagedException;
-import com.exa.utils.values.eval.CalculableValue;
 
 public interface Value<T> extends Serializable {
 
@@ -22,13 +21,17 @@ public interface Value<T> extends Serializable {
 	DecimalValue asDecimalValue();
 	
 	IntegerValue asIntegerValue();
-
-	CalculableValue<?> asCalculableValue();
+	
+	CalculableValue asCalculableValue();
+	
+	Integer asInteger() throws ManagedException;
 
 	ObjectValue asRequiredObjectValue() throws ManagedException;
+	
+	String asRequiredString() throws ManagedException;
+	
+	Integer asRequiredInteger() throws ManagedException;
 
-//	Integer getPathAttributAsInetegrEx(String pathAttribut) throws ManagedException;
-
-	String getValueAsString() throws ManagedException;
+	String asString() throws ManagedException;
 
 }

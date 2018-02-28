@@ -1,6 +1,6 @@
 package com.exa.utils.values;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +13,7 @@ public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 	private static final long serialVersionUID = 1L;
 	
 	public ObjectValue() {
-		super(new HashMap<>());
+		super(new LinkedHashMap<>());
 	}
 	
 	@Override
@@ -81,6 +81,16 @@ public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 		
 		return ov;
 	}
+	
+	public Map<String, Value<?>> getAttributAsMap(String name) throws ManagedException {
+		Value<?> v = value.get(name);
+		if(v == null) return null;
+		
+		ObjectValue ov = v.asObjectValue();
+		if(ov == null) throw new ManagedException(String.format("The property %s is not an object value.", name));
+		
+		return ov.getValue();
+	}
 		
 	public Integer getRequiredAttributAsInteger(String name) throws ManagedException {
 		Integer res = getAttributAsInteger(name);
@@ -112,6 +122,14 @@ public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 	public Value<?> getAttribut(String name) {
 		return value.get(name);
 	}
+	
+	public Value<?> getRequiredAttribut(String name) throws ManagedException {
+		Value<?> res = value.get(name);
+		if(res == null) throw new ManagedException(String.format("The property %s is required.", name));
+		
+		return res;
+	}
+	
 	
 	public List<Value<?>> getRequiredAttributAsArray(String name) throws ManagedException {
 		List<Value<?>> res = getAttributAsArray(name);
@@ -269,5 +287,35 @@ public class ObjectValue extends MemoryValue<Map<String, Value<?>>> {
 		return res;
 	}
 	
+	public Integer getIntOrStringIntAttribut(String name) throws ManagedException {
+		IntegerValue iv = asIntegerValue();
+		
+		if(iv == null) {
+			StringValue sv = asStringValue();
+			if(sv == null) throw new ManagedException(String.format("This is not an integer or could not be convertes."));
+			
+			String s = sv.getValue();
+			if(s == null) return null;
+		
+			try {
+				Integer res = Integer.valueOf(s);
+				
+				return res;
+			}catch(NumberFormatException e) {
+				throw new ManagedException(e);
+			}
+			
+		}
+		
+		return iv.getValue();
+	}
+	
+	public Integer getRequiredIntOrStringIntAttribut(String name) throws ManagedException {
+		Integer res = getIntOrStringIntAttribut(name);
+		if(res == null) throw new ManagedException(String.format("The property %s should not be null", name));
+		
+		return res;
+		
+	}
 
 }

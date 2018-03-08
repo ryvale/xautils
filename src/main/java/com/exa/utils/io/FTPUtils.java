@@ -49,7 +49,6 @@ public class FTPUtils extends IOUtils {
 
 	@Override
 	protected boolean endDownload() throws IOException {
-		
 		return ftpClient.completePendingCommand();
 	}
 	

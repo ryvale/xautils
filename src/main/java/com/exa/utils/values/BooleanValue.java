@@ -18,7 +18,10 @@ public class BooleanValue<_C> extends MemoryValue<Boolean, _C> {
 	public BooleanValue<_C> asBooleanValue() {
 		return this;
 	}
-	
-	
+
+	@Override
+	public BooleanValue<_C> clone() throws CloneNotSupportedException {
+		return new BooleanValue<>(value);
+	}
 
 }

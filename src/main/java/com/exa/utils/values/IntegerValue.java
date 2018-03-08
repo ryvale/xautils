@@ -21,6 +21,17 @@ public class IntegerValue<_C> extends MemoryValue<Integer, _C> {
 	public IntegerValue<_C> asIntegerValue() {
 		return this;
 	}
+
+	@Override
+	public IntegerValue<_C> clone() throws CloneNotSupportedException {
+		return new IntegerValue<>(value);
+	}
+
+	@Override
+	public String toString() {
+		if(value == null) return null;
+		return value.toString();
+	}
 	
 	
 

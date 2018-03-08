@@ -31,11 +31,9 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		Value<?, _C> v = value.get(name);
 		if(v == null) return null;
 		
-		StringValue<_C> ov = v.asStringValue();
-		if(ov == null) throw new ManagedException(String.format("The property %s is not an string", name));
-		
-		return ov.toString();
+		return v.asString();
 	}
+	
 	
 	public String getAttributAsString(String name, String defaultValue) throws ManagedException {
 		String res  = getAttributAsString(name);
@@ -44,17 +42,7 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		
 		return res;
 	}
-	
-	/*public String getAttributAsString(String name) {
-		Value<?> v = value.get(name);
-		if(v == null) return null;
 		
-		StringValue ov = v.asStringValue();
-		if(ov == null) return null;
-		
-		return ov.toString();
-	}*/
-	
 	public String getRequiredAttributAsString(String name) throws ManagedException {
 		Value<?, _C> v = value.get(name);
 		if(v == null) throw new ManagedException(String.format("The property %s is required.", name));
@@ -103,28 +91,26 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		Value<?, _C> v = value.get(name);
 		if(v == null) return null;
 		
-		IntegerValue<_C> ov = v.asIntegerValue();
-		if(ov == null) throw new ManagedException(String.format("The property %s is not an integer value.", name));
-		
-		return ov.getValue();
+		return v.asInteger();
 	}
-	
-	/*public Integer getAttributAsInteger(String name) {
-		Value<?> v = value.get(name);
-		if(v == null) return null;
 		
-		IntegerValue ov = v.asIntegerValue();
-		if(ov == null) return null;
-		
-		return ov.getValue();
-	}*/
-	
 	public Value<?, _C> getAttribut(String name) {
 		return value.get(name);
 	}
 	
+	public Value<?, _C> getAttribut(String name, int i) throws ManagedException {
+		Value<?, _C> rpv = value.get(name);
+		if(rpv == null) return null;
+		
+		ArrayValue<_C> av = rpv.asArrayValue();
+		if(av == null) throw new ManagedException(String.format("The attribut %s is not an array", name));
+		
+		return av.get(i);
+	}
+	
 	public Value<?, _C> getRequiredAttribut(String name) throws ManagedException {
 		Value<?, _C> res = value.get(name);
+		
 		if(res == null) throw new ManagedException(String.format("The property %s is required.", name));
 		
 		return res;
@@ -159,25 +145,39 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 	}
 		
 	public String getPathAttributAsString(String pathAttribut) throws ManagedException {
-		
 		String parts[] = pathAttribut.split("[.]");
+		Value<?, _C> rpv = getAttributEx(parts[0]);
 		
-		Value<?, _C> rpv = getAttribut(parts[0]);
-		//if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+		if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
 		
 		for(int i=1;i<parts.length;i++) {
 			ObjectValue<_C> rpo = rpv.asObjectValue();
 			if(rpo == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
 			
-			rpv = rpo.getAttribut(parts[i]);
+			rpv = rpo.getAttributEx(parts[i]);
 		}
 		
 		if(rpv == null) return null;
 		
-		StringValue<_C> rps = rpv.asStringValue();
-		if(rps == null) throw new ManagedException(String.format("The property %s is not a string.", parts[parts.length - 1]));
+		return rpv.asString();
+	}
+	
+	public Value<?, _C> getAttributEx(String query) throws ManagedException {
+		Value<?, _C> res;
 		
-		return rps.getValue();
+		if(query.endsWith("]")) {
+			int p = query.indexOf('[');
+			if(p < 0) throw new ManagedException(String.format("The property path %s not well formed.", query));
+			
+			int i = Integer.parseInt(query.substring(p+1, query.length()-1));
+			String att = query.substring(0, p);
+			res = getAttribut(att, i);
+		}
+		else {
+			res = getAttribut(query);
+		}
+		
+		return res;
 	}
 	
 	public ArrayValue<_C> getPathAttributAsArrayValue(String pathAttribut) throws ManagedException {
@@ -201,21 +201,20 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 	}
 	
 	public List<Value<?, _C>> getPathAttributAsArray(String pathAttribut) throws ManagedException {
-		
 		String parts[] = pathAttribut.split("[.]");
 		
 		Value<?, _C> rpv = getAttribut(parts[0]);
-		if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+		if(rpv == null) throw new ManagedException(String.format("The property path %s is not defined.", pathAttribut));
 		
 		for(int i=1;i<parts.length;i++) {
 			ObjectValue<_C> rpo = rpv.asObjectValue();
-			if(rpo == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+			if(rpo == null) throw new ManagedException(String.format("The property path %s is not defined.", pathAttribut));
 			
 			rpv = rpo.getAttribut(parts[i]);
 		}
 		
 		ArrayValue<_C> av = rpv.asArrayValue();
-		if(av == null) throw new ManagedException(String.format("The property %s is not a string.", parts[parts.length - 1]));
+		if(av == null) throw new ManagedException(String.format("The property path %s is not defined.", parts[parts.length - 1]));
 		
 		return av.getValue();
 	}
@@ -232,17 +231,16 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 	}*/
 	
 	public ObjectValue<_C> getPathAttributAsObjecValue(String pathAttribut) throws ManagedException {
-		
 		String parts[] = pathAttribut.split("[.]");
 		
-		Value<?, _C> rpv = getAttribut(parts[0]);
+		Value<?, _C> rpv = getAttributEx(parts[0]);
 		//if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
 		
 		for(int i=1;i<parts.length;i++) {
 			ObjectValue<_C> rpo = rpv.asObjectValue();
 			if(rpo == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
 			
-			rpv = rpo.getAttribut(parts[i]);
+			rpv = rpo.getAttributEx(parts[i]);
 		}
 		
 		
@@ -316,6 +314,16 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		
 		return res;
 		
+	}
+
+	@Override
+	public ObjectValue<_C> clone() throws CloneNotSupportedException {
+		ObjectValue<_C> res = new ObjectValue<>();
+		
+		for(String k : value.keySet()) {
+			res.setAttribut(k, value.get(k).clone());
+		}
+		return res;
 	}
 
 }

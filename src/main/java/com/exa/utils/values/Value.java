@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.exa.utils.ManagedException;
 
-public interface Value<T, _C> extends Serializable {
+public interface Value<T, _C> extends Serializable, Cloneable {
 
 	T getValue();
 
@@ -22,7 +22,7 @@ public interface Value<T, _C> extends Serializable {
 	
 	IntegerValue<_C> asIntegerValue();
 	
-	CalculableValue<_C> asCalculableValue();
+	CalculableValue<T, _C> asCalculableValue();
 	
 	Integer asInteger() throws ManagedException;
 
@@ -33,5 +33,9 @@ public interface Value<T, _C> extends Serializable {
 	Integer asRequiredInteger() throws ManagedException;
 
 	String asString() throws ManagedException;
+
+	Value<T, _C> clone() throws CloneNotSupportedException;
+	
+	
 
 }

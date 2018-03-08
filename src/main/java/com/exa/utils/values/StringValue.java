@@ -21,5 +21,10 @@ public class StringValue<_C>  extends MemoryValue<String, _C> {
 	public String toString() {
 		return value;
 	}
+
+	@Override
+	public StringValue<_C> clone() throws CloneNotSupportedException {
+		return new StringValue<>(value);
+	}
 	
 }

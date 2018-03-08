@@ -1,30 +1,19 @@
 package com.exa.utils.values;
 
-public class CalculableValue<_C> extends MemoryValue<_C, _C> {
+public abstract class CalculableValue<T, _C> implements Value<T, _C> {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	public static interface TokenManager {
-		
-	}
-	
-	private String expType;
-	
-	public CalculableValue(_C value, String expType) {
-		super(value);
-		
-	}
 
 	@Override
-	public CalculableValue<_C> asCalculableValue() {
-		return this;
-	}
+	public abstract CalculableValue<T, _C> clone() throws CloneNotSupportedException;
 	
-	public String expType() { return expType; }
+	public abstract String getContext();
 	
+	public abstract String typeName();
 	
-	
+	public abstract void setContext(String context);
+
 
 }

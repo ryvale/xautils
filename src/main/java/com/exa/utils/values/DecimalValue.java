@@ -18,4 +18,9 @@ public class DecimalValue<_C> extends MemoryValue<Double, _C> {
 	public DecimalValue<_C> asDecimalValue() {
 		return this;
 	}
+
+	@Override
+	public DecimalValue<_C> clone() throws CloneNotSupportedException {
+		return new DecimalValue<>(value);
+	}
 }

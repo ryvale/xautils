@@ -114,7 +114,7 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 	}
 
 	@Override
-	public CalculableValue<_C> asCalculableValue() {
+	public CalculableValue<T, _C> asCalculableValue() {
 		return null;
 	}
 
@@ -125,6 +125,17 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 		
 		return res;
 	}
+
+	@Override
+	public abstract MemoryValue<T, _C> clone() throws CloneNotSupportedException;
+
+	@Override
+	public String toString() {
+		if(value == null) return null;
+		return value.toString();
+	}
+
+	
 	
 	
 	

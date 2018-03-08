@@ -15,6 +15,15 @@ public class ArrayValue<_C> extends MemoryValue<List<Value<?, _C>>, _C> {
 	public ArrayValue() {
 		super(new ArrayList<>());
 	}
+	
+	
+
+	public ArrayValue(List<Value<?, _C>> value) {
+		super(value);
+		
+	}
+
+
 
 	@Override
 	public ArrayValue<_C> asArrayValue() {
@@ -85,6 +94,20 @@ public class ArrayValue<_C> extends MemoryValue<List<Value<?, _C>>, _C> {
 		ArrayValue<_C> res = new ArrayValue<>();
 		value.add(res);
 		return res;
+	}
+
+	@Override
+	public ArrayValue<_C> clone() throws CloneNotSupportedException {
+		ArrayValue<_C> res = new ArrayValue<>();
+		
+		for(Value<?, _C> vl : value) {
+			res.add(vl.clone());
+		}
+		return res;
+	}
+
+	public Value<?, _C> get(int i) {
+		return value.get(i);
 	}
  
 }

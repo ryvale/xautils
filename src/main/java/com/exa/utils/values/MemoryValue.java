@@ -101,6 +101,14 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 		
 		return v.getValue();
 	}
+	
+	@Override
+	public Boolean asBoolean() throws ManagedException {
+		BooleanValue<_C> v = asBooleanValue();
+		if(v == null) throw new ManagedException(String.format("This value is not a integer value."));
+		
+		return v.getValue();
+	}
 
 	@Override
 	public Integer asRequiredInteger() throws ManagedException {

@@ -47,10 +47,10 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		Value<?, _C> v = value.get(name);
 		if(v == null) throw new ManagedException(String.format("The property %s is required.", name));
 		
-		StringValue<_C> ov = v.asStringValue();
-		if(ov == null) throw new ManagedException(String.format("The property %s is not an string.", name));
+		/*StringValue<_C> ov = v.asStringValue();
+		if(ov == null) throw new ManagedException(String.format("The property %s is not an string.", name));*/
 		
-		return ov.toString();
+		return v.asRequiredString();
 	}
 	
 	public ObjectValue<_C> getRequiredAttributAsObjectValue(String name) throws ManagedException {
@@ -236,6 +236,7 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		Value<?, _C> rpv = getAttributEx(parts[0]);
 		//if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
 		
+
 		for(int i=1;i<parts.length;i++) {
 			ObjectValue<_C> rpo = rpv.asObjectValue();
 			if(rpo == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
@@ -245,6 +246,28 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		
 		
 		if(rpv == null) return null;
+		
+		ObjectValue<_C> ov = rpv.asObjectValue();
+		if(ov == null) throw new ManagedException(String.format("The property %s is not an object.", parts[parts.length - 1]));
+		
+		return ov; //.getAttributAsObjectValue(parts[parts.length - 1]);
+	}
+	
+	public ObjectValue<_C> getAttributByPathAsObjectValue(String pathAttribut) throws ManagedException {
+		String parts[] = pathAttribut.split("[.]");
+		
+		Value<?, _C> rpv = getAttributEx(parts[0]);
+		if(rpv == null) return null;
+
+		for(int i=1;i<parts.length;i++) {
+			ObjectValue<_C> rpo = rpv.asObjectValue();
+			if(rpo == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+			
+			rpv = rpo.getAttributEx(parts[i]);
+			if(rpv == null) return null;
+		}
+		
+		//if(rpv == null) return null;
 		
 		ObjectValue<_C> ov = rpv.asObjectValue();
 		if(ov == null) throw new ManagedException(String.format("The property %s is not an object.", parts[parts.length - 1]));

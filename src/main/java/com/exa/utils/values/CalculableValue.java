@@ -9,11 +9,13 @@ public abstract class CalculableValue<T, _C> implements Value<T, _C> {
 	@Override
 	public abstract CalculableValue<T, _C> clone() throws CloneNotSupportedException;
 	
-	public abstract String getContext();
+	//public abstract String getContext();
 	
 	public abstract String typeName();
 	
 	public abstract void setContext(String context);
+	
+	public abstract String getEvalTime();
 
 
 }

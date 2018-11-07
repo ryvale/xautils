@@ -25,6 +25,8 @@ public interface Value<T, _C> extends Serializable, Cloneable {
 	CalculableValue<T, _C> asCalculableValue();
 	
 	Integer asInteger() throws ManagedException;
+	
+	Boolean asBoolean() throws ManagedException;
 
 	ObjectValue<_C> asRequiredObjectValue() throws ManagedException;
 	

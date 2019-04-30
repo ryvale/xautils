@@ -143,6 +143,13 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		
 		return av.getValue();
 	}
+	
+	public ArrayValue<_C> getRequiredAttributAsArrayValue(String name) throws ManagedException {
+		ArrayValue<_C> av = getAttributAsArrayValue(name);
+		if(av == null) throw new ManagedException(String.format("The property %s is not a non null array value", name));
+		
+		return av;
+	}
 		
 	public String getPathAttributAsString(String pathAttribut) throws ManagedException {
 		String parts[] = pathAttribut.split("[.]");
@@ -337,6 +344,20 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		
 		return res;
 		
+	}
+	
+	public Boolean getRequiredAttributAsBoolean(String name) throws ManagedException {
+		Boolean res = getAttributAsBoolean(name);
+		if(res == null) throw new ManagedException(String.format("The property %s is required.", name));
+		
+		return res;
+	}
+	
+	public Boolean getAttributAsBoolean(String name) throws ManagedException {
+		Value<?, _C> v = value.get(name);
+		if(v == null) return null;
+		
+		return v.asBoolean();
 	}
 
 	@Override

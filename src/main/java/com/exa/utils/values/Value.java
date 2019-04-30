@@ -33,6 +33,8 @@ public interface Value<T, _C> extends Serializable, Cloneable {
 	String asRequiredString() throws ManagedException;
 	
 	Integer asRequiredInteger() throws ManagedException;
+	
+	Boolean asRequiredBoolean() throws ManagedException;
 
 	String asString() throws ManagedException;
 

@@ -120,6 +120,14 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 		
 		return res;
 	}
+	
+	@Override
+	public Boolean asRequiredBoolean() throws ManagedException {
+		Boolean res = asBoolean();
+		if(res == null) throw new ManagedException("This boolean value have not to be null."); 
+		
+		return res;
+	}
 
 	@Override
 	public CalculableValue<T, _C> asCalculableValue() {

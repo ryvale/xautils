@@ -41,5 +41,4 @@ public interface Value<T, _C> extends Serializable, Cloneable {
 	Value<T, _C> clone() throws CloneNotSupportedException;
 	
 	
-
 }

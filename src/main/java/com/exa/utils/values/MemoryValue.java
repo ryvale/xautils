@@ -91,7 +91,6 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 		if(sv == null) throw new ManagedException(String.format("This value is not a string value."));
 		
 		return sv.getValue();
-		
 	}
 
 	@Override
@@ -150,10 +149,5 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 		if(value == null) return null;
 		return value.toString();
 	}
-
-	
-	
-	
-	
 	
 }

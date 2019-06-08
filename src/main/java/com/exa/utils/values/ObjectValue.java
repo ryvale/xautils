@@ -388,4 +388,9 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		return res;
 	}
 
+	@Override
+	public String typeName() {
+		return "object";
+	}
+
 }

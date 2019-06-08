@@ -109,5 +109,10 @@ public class ArrayValue<_C> extends MemoryValue<List<Value<?, _C>>, _C> {
 	public Value<?, _C> get(int i) {
 		return value.get(i);
 	}
+
+	@Override
+	public String typeName() {
+		return "array";
+	}
  
 }

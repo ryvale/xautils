@@ -24,4 +24,9 @@ public class BooleanValue<_C> extends MemoryValue<Boolean, _C> {
 		return new BooleanValue<>(value);
 	}
 
+	@Override
+	public String typeName() {
+		return "boolean";
+	}
+
 }

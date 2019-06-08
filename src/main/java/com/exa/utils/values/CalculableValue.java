@@ -11,8 +11,6 @@ public abstract class CalculableValue<T, _C> implements Value<T, _C> {
 	
 	//public abstract String getContext();
 	
-	public abstract String typeName();
-	
 	public abstract void setContext(String context);
 	
 	public abstract String getEvalTime();

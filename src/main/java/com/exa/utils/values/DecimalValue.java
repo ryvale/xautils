@@ -23,4 +23,9 @@ public class DecimalValue<_C> extends MemoryValue<Double, _C> {
 	public DecimalValue<_C> clone() throws CloneNotSupportedException {
 		return new DecimalValue<>(value);
 	}
+
+	@Override
+	public String typeName() {
+		return "float";
+	}
 }

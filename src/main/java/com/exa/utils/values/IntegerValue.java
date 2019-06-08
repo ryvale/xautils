@@ -32,6 +32,11 @@ public class IntegerValue<_C> extends MemoryValue<Integer, _C> {
 		if(value == null) return null;
 		return value.toString();
 	}
+
+	@Override
+	public String typeName() {
+		return "int";
+	}
 	
 	
 

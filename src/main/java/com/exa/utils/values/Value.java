@@ -7,6 +7,8 @@ import com.exa.utils.ManagedException;
 public interface Value<T, _C> extends Serializable, Cloneable {
 
 	T getValue();
+	
+	public abstract String typeName();
 
 	void setValue(T value);
 

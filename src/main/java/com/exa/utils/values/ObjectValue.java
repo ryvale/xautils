@@ -169,6 +169,24 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		return rpv.asString();
 	}
 	
+	public Value<?, _C> getPathAttribut(String pathAttribut) throws ManagedException {
+		String parts[] = pathAttribut.split("[.]");
+		Value<?, _C> rpv = getAttributEx(parts[0]);
+		
+		if(rpv == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+		
+		for(int i=1;i<parts.length;i++) {
+			ObjectValue<_C> rpo = rpv.asObjectValue();
+			if(rpo == null) throw new ManagedException(String.format("The property path %s canot be reach.", pathAttribut));
+			
+			rpv = rpo.getAttributEx(parts[i]);
+		}
+		
+		if(rpv == null) return null;
+		
+		return rpv;
+	}
+	
 	public Integer getPathAttributAsInteger(String pathAttribut) throws ManagedException {
 		String parts[] = pathAttribut.split("[.]");
 		Value<?, _C> rpv = getAttributEx(parts[0]);

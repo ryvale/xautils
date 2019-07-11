@@ -26,10 +26,6 @@ public interface Value<T, _C> extends Serializable, Cloneable {
 	
 	CalculableValue<T, _C> asCalculableValue();
 	
-	Integer asInteger() throws ManagedException;
-	
-	Boolean asBoolean() throws ManagedException;
-
 	ObjectValue<_C> asRequiredObjectValue() throws ManagedException;
 	
 	String asRequiredString() throws ManagedException;
@@ -37,10 +33,17 @@ public interface Value<T, _C> extends Serializable, Cloneable {
 	Integer asRequiredInteger() throws ManagedException;
 	
 	Boolean asRequiredBoolean() throws ManagedException;
+	
+	Double asRequiredDouble() throws ManagedException;
 
 	String asString() throws ManagedException;
-
-	Value<T, _C> clone() throws CloneNotSupportedException;
 	
+	Integer asInteger() throws ManagedException;
+	
+	Boolean asBoolean() throws ManagedException;
+	
+	Double asDouble() throws ManagedException;
+	
+	Value<T, _C> clone() throws CloneNotSupportedException;
 	
 }

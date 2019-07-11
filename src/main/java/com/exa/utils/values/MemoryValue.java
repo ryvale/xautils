@@ -108,6 +108,22 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 		
 		return v.getValue();
 	}
+	
+	@Override
+	public Double asDouble() throws ManagedException {
+		DecimalValue<_C> v = asDecimalValue();
+		if(v == null) throw new ManagedException(String.format("This value is not a integer value."));
+		
+		return v.getValue();
+	}
+
+	@Override
+	public String asRequiredString() throws ManagedException {
+		String res = asString();
+		if(res == null) throw new ManagedException("This string value have not to be null.");
+		
+		return res;
+	}
 
 	@Override
 	public Integer asRequiredInteger() throws ManagedException {
@@ -127,18 +143,18 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 		
 		return res;
 	}
+	
+	@Override
+	public Double asRequiredDouble() throws ManagedException {
+		Double res = asDouble();
+		if(res == null) throw new ManagedException("This double value have not to be null."); 
+		
+		return res;
+	}
 
 	@Override
 	public CalculableValue<T, _C> asCalculableValue() {
 		return null;
-	}
-
-	@Override
-	public String asRequiredString() throws ManagedException {
-		String res = asString();
-		if(res == null) throw new ManagedException("This string value have not to be null.");
-		
-		return res;
 	}
 
 	@Override

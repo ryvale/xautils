@@ -20,7 +20,7 @@ public class BooleanValue<_C> extends MemoryValue<Boolean, _C> {
 	}
 
 	@Override
-	public BooleanValue<_C> clone() throws CloneNotSupportedException {
+	public BooleanValue<_C> clone() /*throws CloneNotSupportedException*/ {
 		return new BooleanValue<>(value);
 	}
 

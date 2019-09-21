@@ -23,7 +23,7 @@ public class StringValue<_C>  extends MemoryValue<String, _C> {
 	}
 
 	@Override
-	public StringValue<_C> clone() throws CloneNotSupportedException {
+	public StringValue<_C> clone() /*throws CloneNotSupportedException*/ {
 		return new StringValue<>(value);
 	}
 

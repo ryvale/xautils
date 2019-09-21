@@ -23,7 +23,7 @@ public class IntegerValue<_C> extends MemoryValue<Integer, _C> {
 	}
 
 	@Override
-	public IntegerValue<_C> clone() throws CloneNotSupportedException {
+	public IntegerValue<_C> clone() /*throws CloneNotSupportedException*/ {
 		return new IntegerValue<>(value);
 	}
 

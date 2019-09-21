@@ -158,7 +158,7 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 	}
 
 	@Override
-	public abstract MemoryValue<T, _C> clone() throws CloneNotSupportedException;
+	public abstract MemoryValue<T, _C> clone() /*throws CloneNotSupportedException*/;
 
 	@Override
 	public String toString() {

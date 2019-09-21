@@ -97,7 +97,7 @@ public class ArrayValue<_C> extends MemoryValue<List<Value<?, _C>>, _C> {
 	}
 
 	@Override
-	public ArrayValue<_C> clone() throws CloneNotSupportedException {
+	public ArrayValue<_C> clone() /*throws CloneNotSupportedException*/ {
 		ArrayValue<_C> res = new ArrayValue<>();
 		
 		for(Value<?, _C> vl : value) {

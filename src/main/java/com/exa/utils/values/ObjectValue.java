@@ -415,7 +415,7 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 	}
 
 	@Override
-	public ObjectValue<_C> clone() throws CloneNotSupportedException {
+	public ObjectValue<_C> clone() /*throws CloneNotSupportedException*/ {
 		ObjectValue<_C> res = new ObjectValue<>();
 		
 		for(String k : value.keySet()) {

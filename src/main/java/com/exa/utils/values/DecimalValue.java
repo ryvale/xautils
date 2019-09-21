@@ -20,7 +20,7 @@ public class DecimalValue<_C> extends MemoryValue<Double, _C> {
 	}
 
 	@Override
-	public DecimalValue<_C> clone() throws CloneNotSupportedException {
+	public DecimalValue<_C> clone() /*throws CloneNotSupportedException*/ {
 		return new DecimalValue<>(value);
 	}
 

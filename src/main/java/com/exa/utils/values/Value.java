@@ -44,6 +44,6 @@ public interface Value<T, _C> extends Serializable, Cloneable {
 	
 	Double asDouble() throws ManagedException;
 	
-	Value<T, _C> clone() throws CloneNotSupportedException;
+	Value<T, _C> clone() /*throws CloneNotSupportedException*/;
 	
 }

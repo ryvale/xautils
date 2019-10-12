@@ -28,6 +28,8 @@ public interface Value<T, _C> extends Serializable, Cloneable {
 	
 	ObjectValue<_C> asRequiredObjectValue() throws ManagedException;
 	
+	ArrayValue<_C> asRequiredArrayValue() throws ManagedException;
+	
 	String asRequiredString() throws ManagedException;
 	
 	Integer asRequiredInteger() throws ManagedException;

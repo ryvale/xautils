@@ -73,6 +73,14 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 		return res;
 	}
 	
+	@Override
+	public ArrayValue<_C> asRequiredArrayValue() throws ManagedException { 
+		ArrayValue<_C> res = asArrayValue();
+		if(res == null)	throw new ManagedException("This value is not an object");
+		
+		
+		return res;
+	}
 	
 	
 	/* (non-Javadoc)

@@ -1,5 +1,8 @@
 package com.exa.utils.values;
 
+import java.util.List;
+import java.util.Map;
+
 import com.exa.utils.ManagedException;
 
 public class NullValue<_C> implements Value<Object, _C> {
@@ -111,6 +114,18 @@ public class NullValue<_C> implements Value<Object, _C> {
 
 	@Override
 	public ArrayValue<_C> asRequiredArrayValue() throws ManagedException {
+		return null;
+	}
+
+	@Override
+	public List<Value<?, _C>> asArray() throws ManagedException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Value<?, _C>> asObject() throws ManagedException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

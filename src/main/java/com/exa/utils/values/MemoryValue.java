@@ -1,5 +1,8 @@
 package com.exa.utils.values;
 
+import java.util.List;
+import java.util.Map;
+
 import com.exa.utils.ManagedException;
 
 public abstract class MemoryValue<T, _C> implements Value<T, _C> {
@@ -121,6 +124,22 @@ public abstract class MemoryValue<T, _C> implements Value<T, _C> {
 	public Double asDouble() throws ManagedException {
 		DecimalValue<_C> v = asDecimalValue();
 		if(v == null) throw new ManagedException(String.format("This value is not a integer value."));
+		
+		return v.getValue();
+	}
+
+	@Override
+	public List<Value<?, _C>> asArray() throws ManagedException {
+		ArrayValue<_C> v = asArrayValue();
+		if(v == null) throw new ManagedException(String.format("This value is not an array value."));
+		
+		return v.getValue();
+	}
+	
+	@Override
+	public Map<String, Value<?, _C>> asObject() throws ManagedException {
+		ObjectValue<_C> v = asObjectValue();
+		if(v == null) throw new ManagedException(String.format("This value is not an array value."));
 		
 		return v.getValue();
 	}

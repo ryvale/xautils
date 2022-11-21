@@ -256,7 +256,7 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		}
 		
 		ArrayValue<_C> av = rpv.asArrayValue();
-		if(av == null) throw new ManagedException(String.format("The property %s is not a string.", parts[parts.length - 1]));
+		if(av == null) throw new ManagedException(String.format("The property %s is not an array.", parts[parts.length - 1]));
 		
 		return av;
 	}

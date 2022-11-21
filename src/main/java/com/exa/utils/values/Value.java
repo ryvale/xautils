@@ -1,6 +1,8 @@
 package com.exa.utils.values;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 import com.exa.utils.ManagedException;
 
@@ -45,6 +47,10 @@ public interface Value<T, _C> extends Serializable, Cloneable {
 	Boolean asBoolean() throws ManagedException;
 	
 	Double asDouble() throws ManagedException;
+	
+	List<Value<?, _C>> asArray() throws ManagedException;
+	
+	Map<String, Value<?, _C>> asObject() throws ManagedException;
 	
 	Value<T, _C> clone() /*throws CloneNotSupportedException*/;
 	

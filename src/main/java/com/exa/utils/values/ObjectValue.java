@@ -16,7 +16,9 @@ public class ObjectValue<_C> extends MemoryValue<Map<String, Value<?, _C>>, _C> 
 		super(new LinkedHashMap<>());
 	}
 	
-	public ObjectValue(LinkedHashMap<String, Value<?, _C>> v) {
+	
+	// use LinkedHashMap instead of Map while creating an instance
+	public ObjectValue(Map<String, Value<?, _C>> v) {
 		super(v);
 	}
 	

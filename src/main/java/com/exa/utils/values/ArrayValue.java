@@ -114,5 +114,7 @@ public class ArrayValue<_C> extends MemoryValue<List<Value<?, _C>>, _C> {
 	public String typeName() {
 		return "array";
 	}
+	
+	public Integer length() { return value.size(); }
  
 }

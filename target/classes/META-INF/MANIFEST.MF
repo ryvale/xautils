@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
+Built-By: rely
+Build-Jdk: 17.0.9
 Implementation-Title: xautils
 Implementation-Version: 0.9.1
-Built-By: rely
 Implementation-Vendor-Id: com.exa.utils
-Build-Jdk: 1.8.0_202
+Implementation-Vendor: Pivotal Software, Inc.
 Implementation-URL: http://projects.spring.io/spring-boot/xautils/
 Created-By: Maven Integration for Eclipse
-Implementation-Vendor: Pivotal Software, Inc.
 

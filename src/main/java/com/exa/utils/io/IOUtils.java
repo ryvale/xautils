@@ -96,6 +96,26 @@ public abstract class IOUtils {
 	protected abstract boolean endDownload() throws IOException;
 	
 	public static String normalizedDirectoryPath(String path) {
+		return normalizedDirectoryPath(path, null);
+	}
+	
+	public static String normalizedDirectoryPath(String path, String workingDir) {
+		
+		if(path == null) return null;
+		
+		path = path.trim();
+		
+		if(workingDir != null) {
+			workingDir = workingDir.trim();
+			
+			if(path.startsWith(".")) {
+				path = ((workingDir.endsWith("/") || workingDir.endsWith("\\")) ? workingDir.substring(0, workingDir.length()-1) : workingDir) + path.substring(1);
+			}
+				
+				
+		}
+		
+		
 		
 		if(path.endsWith("/")) return path;
 		
@@ -111,6 +131,18 @@ public abstract class IOUtils {
 	}
 	
 	public static String normalizedPath(String path) {
+		return normalizedPath(path, null);
+	}
+	
+	public static String normalizedPath(String path, String workingDir) {
+		
+		if(workingDir != null) {
+			workingDir = workingDir.trim();
+			
+			if(path.startsWith(".")) {
+				path = ((workingDir.endsWith("/") || workingDir.endsWith("\\")) ? workingDir.substring(0, workingDir.length()-1) : workingDir) + path.substring(1);
+			}
+		}
 		
 		if(path.contains("\\")) return path.replace('\\', '/');
 
